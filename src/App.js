@@ -14,7 +14,7 @@ function App() {
           name="Nicholas Ribeiro"
           description="Breker é um gato fod@"
           music="Música épica"
-          video={videoBreker}
+          url=""
         />
         <Video 
           likes={999}
@@ -23,7 +23,7 @@ function App() {
           name="Pedro"
           description="Bird atento"
           music="Música mística"
-          video={videoBird}
+          url=""
         />
       </div>
     </div>

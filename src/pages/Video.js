@@ -3,7 +3,7 @@ import "./Video.css"
 import VideoFooter from './components/footer/VideoFooter'
 import VideoSidebar from './components/sidebar/VideoSidebar'
 
-function Video({likes, messages, shares, name, description, music,video}) {
+function Video({likes, messages, shares, name, description, music, url}) {
 
     const videoRef = useRef(null)
     const [play, setPlay] = useState(false)
@@ -27,7 +27,7 @@ function Video({likes, messages, shares, name, description, music,video}) {
             ref={videoRef}
             onClick={handleStart}
             loop
-            src={video}
+            src={url}
         ></video>
         <VideoSidebar 
             likes={likes}
