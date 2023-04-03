@@ -1,30 +1,46 @@
+import React, {useEffect, useState} from "react";
 import "./App.css";
 import Video from "./pages/Video";
-import videoBreker from './media/brecker2.mp4'
-import videoBird from './media/bird.mp4'
+import db from "./config/firebase" 
+import {collection, getDocs} from 'firebase/firestore/lite';
 
 function App() {
+
+  let maxHeight;
+  if (window.innerHeight <= 800){
+    maxHeight = window.innerHeight
+  }
+
+  const [videos, setVideos] = useState([])
+
+  async function getVideos(){
+    const videoCollection = collection(db, "videos")
+    const videosSnapshot = await getDocs(videoCollection)
+    const videosList = videosSnapshot.docs.map(doc => doc.data())
+    setVideos(videosList)
+  }
+
+  useEffect(()=>{
+    getVideos();
+  }, [])
+
   return (
-    <div className="App">
+    <div className="App" style={{ maxHeight: maxHeight + "px" }}>
       <div className="app__videos">
-        <Video 
-          likes={111}
-          messages={222}
-          shares={333}
-          name="Nicholas Ribeiro"
-          description="Breker é um gato fod@"
-          music="Música épica"
-          video={videoBreker}
-        />
-        <Video 
-          likes={999}
-          messages={888}
-          shares={777}
-          name="Pedro"
-          description="Bird atento"
-          music="Música mística"
-          video={videoBird}
-        />
+        { videos.map((video,key)=>{
+          return(
+            <Video 
+              key={key}
+              likes={video.likes}
+              messages={video.messages}
+              shares={video.shares}
+              name={video.name}
+              description={video.description}
+              music={video.music}
+              url={video.url}
+            />
+          )
+        }) }
       </div>
     </div>
   );
